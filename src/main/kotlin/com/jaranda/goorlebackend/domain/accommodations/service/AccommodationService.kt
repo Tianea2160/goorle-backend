@@ -16,6 +16,9 @@ class AccommodationService(
     private val accommodationRepository: AccommodationRepository,
     private val userRepository: UserRepository,
 ){
+    @Transactional(readOnly = true)
+    fun findAll() = accommodationRepository.findAll().map { AccommodationReadDTO.of(it) }
+
     @Transactional
     fun createAccommodation(loginId :String,create : AccommodationCreateDTO): AccommodationReadDTO {
         val user = userRepository.findByIdOrNull(loginId) ?: throw UserNotFoundException()
