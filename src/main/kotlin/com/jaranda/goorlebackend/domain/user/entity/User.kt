@@ -1,5 +1,6 @@
 package com.jaranda.goorlebackend.domain.user.entity
 
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
@@ -11,16 +12,17 @@ import org.springframework.security.core.userdetails.UserDetails
 @Table(name = "users")
 class User(
     @Id
+    @Column(name = "user_id")
     val id: String,
+    val nickname: String = "초보",
+    val score: Long = 0L,
+) : UserDetails {
+    override fun getAuthorities() = mutableListOf(SimpleGrantedAuthority("ROLE_USER"))
 
-    ) : UserDetails {
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> =
-        mutableListOf(SimpleGrantedAuthority("ROLE_USER"))
-
-    override fun getPassword(): String = id
+    override fun getPassword() = id
     override fun getUsername() = id
-    override fun isAccountNonExpired(): Boolean = true
-    override fun isAccountNonLocked(): Boolean = true
-    override fun isCredentialsNonExpired(): Boolean = true
-    override fun isEnabled(): Boolean = true
+    override fun isAccountNonExpired() = true
+    override fun isAccountNonLocked() = true
+    override fun isCredentialsNonExpired() = true
+    override fun isEnabled() = true
 }
