@@ -8,6 +8,7 @@ class CommentReadDTO(
     val id: String,
     val content: String,
     val writer: UserReadDTO,
+    val emoticon: Int,
     val createdAt: LocalDateTime
 ) {
     companion object {
@@ -15,7 +16,8 @@ class CommentReadDTO(
             id = entity.id,
             content = entity.content,
             writer = UserReadDTO.of(entity.writer),
-            createdAt = entity.createdAt
+            emoticon = entity.emoticon,
+            createdAt = entity.createdAt,
         )
     }
 }

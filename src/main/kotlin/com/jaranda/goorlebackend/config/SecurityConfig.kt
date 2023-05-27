@@ -30,7 +30,7 @@ class SecurityConfig(
                 auth
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                     .requestMatchers("/api/v1/auth/**").permitAll()
-                    .requestMatchers("/api/v1/accommodations/**").authenticated()
+                    .requestMatchers("/api/v1/**").authenticated()
                     .anyRequest().denyAll()
             }
         return http.build()
