@@ -4,6 +4,7 @@ import com.jaranda.goorlebackend.domain.accommodations.error.AccommodationNotFou
 import com.jaranda.goorlebackend.domain.accommodations.error.NoPermissionException
 import com.jaranda.goorlebackend.domain.accommodations.repository.AccommodationRepository
 import com.jaranda.goorlebackend.domain.comment.dto.CommentCreateDTO
+import com.jaranda.goorlebackend.domain.comment.dto.CommentRecentReadDTO
 import com.jaranda.goorlebackend.domain.comment.repository.CommentRepository
 import com.jaranda.goorlebackend.domain.user.error.UserNotFoundException
 import com.jaranda.goorlebackend.domain.user.repository.UserRepository
@@ -36,4 +37,7 @@ class CommentService(
         commentRepository.deleteById(commentId)
         return commentId
     }
+
+    @Transactional
+    fun findRecentComments() = commentRepository.findRecentComments().map { CommentRecentReadDTO.of(it) }
 }
