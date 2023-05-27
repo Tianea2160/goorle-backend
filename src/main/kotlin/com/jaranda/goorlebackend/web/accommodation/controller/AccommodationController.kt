@@ -17,6 +17,19 @@ class AccommodationController(
     @GetMapping("")
     fun findAll() = accommodationService.findAll()
 
+    @GetMapping("/user/{userId}")
+    fun findAllByUser(
+        @PathVariable userId: String
+    ) = accommodationService.findAllByUserId(userId)
+
+    @GetMapping("/me")
+    fun findMyAccommodation(
+        authentication: Authentication
+    ) = accommodationService.findAllByUserId(authentication.name)
+
+    @GetMapping("/{accommodationId}")
+    fun findById(@PathVariable accommodationId: String) = accommodationService.findById(accommodationId)
+
     @PostMapping("")
     fun createAccommodation(
         authentication: Authentication,
@@ -43,5 +56,4 @@ class AccommodationController(
         @PathVariable("accommodationId") accommodationId: String,
         @PathVariable("commentId") commentId: String,
     ) = commentService.deleteComment(authentication.name, accommodationId, commentId)
-
 }

@@ -3,6 +3,7 @@ package com.jaranda.goorlebackend.domain.accommodations.entity
 import com.jaranda.goorlebackend.domain.comment.entity.Comment
 import com.jaranda.goorlebackend.domain.image.entity.Image
 import com.jaranda.goorlebackend.domain.user.entity.User
+import com.jaranda.goorlebackend.shared.util.uuid
 import jakarta.persistence.*
 import java.util.*
 
@@ -11,14 +12,14 @@ import java.util.*
 class Accommodation(
     @Id
     @Column(name = "accommodation_id")
-    val id: String = UUID.randomUUID().toString(),
+    val id: String = uuid(),
     val name: String,
     @Embedded
     val position: Position,
     val location: String,
     @ManyToOne
     @JoinColumn(name = "user_id")
-    val user: User,
+    val writer: User,
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     val comments: MutableList<Comment> = mutableListOf(),
     @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])

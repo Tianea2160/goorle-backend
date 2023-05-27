@@ -14,5 +14,5 @@ class AccommodationCreateDTO(
     val features : List<FeatureValue>
 ){
     fun toEntity(user: User): Accommodation =
-        Accommodation(location = location, user = user, name = name, position = position)
+        Accommodation(location = location, writer = user, name = name, position = position)
 }

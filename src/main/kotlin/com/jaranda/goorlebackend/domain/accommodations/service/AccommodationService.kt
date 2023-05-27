@@ -56,8 +56,19 @@ class AccommodationService(
         for (image in accommodation.images)
             imageService.deleteImage(image.url)
 
-        if (accommodation.user.id != loginId) throw NoPermissionException()
+        if (accommodation.writer.id != loginId) throw NoPermissionException()
         accommodationRepository.delete(accommodation)
         return accommodationId
+    }
+
+    @Transactional(readOnly = true)
+    fun findAllByUserId(userId: String): List<AccommodationReadDTO> =
+        accommodationRepository.findAllByUserId(userId).map { AccommodationReadDTO.of(it) }
+
+    @Transactional(readOnly = true)
+    fun findById(accommodationId: String): AccommodationReadDTO {
+        val accommodation =
+            accommodationRepository.findByIdOrNull(accommodationId) ?: throw AccommodationNotFoundException()
+        return AccommodationReadDTO.of(accommodation)
     }
 }
