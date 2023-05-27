@@ -15,6 +15,7 @@ class Comment(
     val writer: User,
     @Column(columnDefinition = "text")
     val content: String,
+    val emoticon: Int,
     @Column(name = "created_at")
     val createdAt: LocalDateTime = LocalDateTime.now(),
     @ManyToOne(targetEntity = Accommodation::class)
