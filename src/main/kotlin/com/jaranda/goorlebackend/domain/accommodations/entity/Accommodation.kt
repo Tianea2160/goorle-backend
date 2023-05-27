@@ -4,7 +4,7 @@ import com.jaranda.goorlebackend.domain.comment.entity.Comment
 import com.jaranda.goorlebackend.domain.image.entity.Image
 import com.jaranda.goorlebackend.domain.user.entity.User
 import jakarta.persistence.*
-import java.util.UUID
+import java.util.*
 
 @Entity
 @Table(name = "accommodations")

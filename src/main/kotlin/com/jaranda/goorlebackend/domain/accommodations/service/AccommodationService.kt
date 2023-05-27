@@ -1,6 +1,5 @@
 package com.jaranda.goorlebackend.domain.accommodations.service
 
-import ch.qos.logback.core.util.FileSize
 import com.jaranda.goorlebackend.domain.accommodations.dto.AccommodationCreateDTO
 import com.jaranda.goorlebackend.domain.accommodations.dto.AccommodationReadDTO
 import com.jaranda.goorlebackend.domain.accommodations.entity.Feature

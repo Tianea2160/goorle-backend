@@ -1,6 +1,9 @@
 package com.jaranda.goorlebackend.domain.accommodations.dto
 
-import com.jaranda.goorlebackend.domain.accommodations.entity.*
+import com.jaranda.goorlebackend.domain.accommodations.entity.Accommodation
+import com.jaranda.goorlebackend.domain.accommodations.entity.FeatureValue
+import com.jaranda.goorlebackend.domain.accommodations.entity.Position
+import com.jaranda.goorlebackend.domain.accommodations.entity.TagValue
 import com.jaranda.goorlebackend.domain.user.entity.User
 
 class AccommodationCreateDTO(
