@@ -24,4 +24,7 @@ class UserService(
     fun findUserByIdOrNull(userId: String): UserReadDTO? = userRepository.findByIdOrNull(userId)?.let {
         return UserReadDTO.of(it)
     }
+
+    @Transactional(readOnly = true)
+    fun findGoorlePickers() = userRepository.findGoorlePickers().map { UserReadDTO.of(it) }
 }
