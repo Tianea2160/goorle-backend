@@ -12,5 +12,12 @@ class Package(
     @Id
     @Column(name = "package_id")
     val id: String = UUID.randomUUID().toString(),
+    @Column(name = "name")
+    val name: String,
+    @Column(name = "content", columnDefinition = "text")
+    val content: String,
+    @Column(name = "image_url")
+    val imageUrl : String,
+    @Column(name = "url")
     val url: String,
 )
