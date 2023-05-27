@@ -20,4 +20,10 @@ class AccommodationController(
         @RequestPart("data") create: AccommodationCreateDTO,
         @RequestPart("images") files: List<MultipartFile>,
     ) = accommodationService.createAccommodation(authentication.name, create, files)
+
+    @DeleteMapping("/{accommodationId}")
+    fun deleteAccommodation(
+        authentication: Authentication,
+        @PathVariable("accommodationId") accommodationId: String
+    ) = accommodationService.deleteAccommodation(authentication.name, accommodationId)
 }

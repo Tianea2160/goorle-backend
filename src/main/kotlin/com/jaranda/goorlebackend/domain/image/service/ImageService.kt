@@ -53,7 +53,8 @@ class ImageService(
 
     fun deleteImage(url: String) {
         try {
-            s3.deleteObject(bucket, url)
+            val fileName = url.split("/").last()
+            s3.deleteObject(bucket, fileName)
         } catch (e: Exception) {
             logger.error("Error while deleting image", e)
             throw FileDeleteException()

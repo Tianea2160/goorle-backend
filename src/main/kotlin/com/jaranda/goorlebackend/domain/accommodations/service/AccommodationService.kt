@@ -4,7 +4,9 @@ import com.jaranda.goorlebackend.domain.accommodations.dto.AccommodationCreateDT
 import com.jaranda.goorlebackend.domain.accommodations.dto.AccommodationReadDTO
 import com.jaranda.goorlebackend.domain.accommodations.entity.Feature
 import com.jaranda.goorlebackend.domain.accommodations.entity.Tag
+import com.jaranda.goorlebackend.domain.accommodations.error.AccommodationNotFoundException
 import com.jaranda.goorlebackend.domain.accommodations.error.FileSizeValidException
+import com.jaranda.goorlebackend.domain.accommodations.error.NoPermissionException
 import com.jaranda.goorlebackend.domain.accommodations.repository.AccommodationRepository
 import com.jaranda.goorlebackend.domain.image.entity.Image
 import com.jaranda.goorlebackend.domain.image.service.ImageService
@@ -44,5 +46,18 @@ class AccommodationService(
             accommodation.features.add(Feature(value = value, accommodation = accommodation))
 
         return AccommodationReadDTO.of(accommodation)
+    }
+
+    @Transactional
+    fun deleteAccommodation(loginId: String, accommodationId: String): String {
+        val accommodation =
+            accommodationRepository.findByIdOrNull(accommodationId) ?: throw AccommodationNotFoundException()
+
+        for (image in accommodation.images)
+            imageService.deleteImage(image.url)
+
+        if (accommodation.user.id != loginId) throw NoPermissionException()
+        accommodationRepository.delete(accommodation)
+        return accommodationId
     }
 }
