@@ -2,13 +2,9 @@ package com.jaranda.goorlebackend.domain.comment.entity
 
 import com.jaranda.goorlebackend.domain.accommodations.entity.Accommodation
 import com.jaranda.goorlebackend.domain.user.entity.User
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 
 @Entity
 @Table(name = "comments")

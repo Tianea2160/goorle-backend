@@ -4,7 +4,7 @@ import com.jaranda.goorlebackend.domain.comment.entity.Comment
 import com.jaranda.goorlebackend.domain.image.entity.Image
 import com.jaranda.goorlebackend.domain.user.entity.User
 import jakarta.persistence.*
-import java.util.UUID
+import java.util.*
 
 @Entity
 @Table(name = "accommodations")
@@ -13,15 +13,24 @@ class Accommodation(
     @Column(name = "accommodation_id")
     val id: String = UUID.randomUUID().toString(),
     val name: String,
+    @Embedded
+    val position: Position,
     val location: String,
     @ManyToOne
     @JoinColumn(name = "user_id")
     val user: User,
-    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY)
-    val comments: List<Comment>,
-    @OneToMany(mappedBy = "accommodation",  fetch = FetchType.LAZY)
-    val images : List<Image>,
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val comments: MutableList<Comment> = mutableListOf(),
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    val images: MutableList<Image> = mutableListOf(),
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var tags: MutableList<Tag> = mutableListOf(),
+    @OneToMany(mappedBy = "accommodation", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var features: MutableList<Feature> = mutableListOf(),
 )
+
+@Embeddable
+class Position(val lon: Double, val lat: Double)
 
 
 @Entity
