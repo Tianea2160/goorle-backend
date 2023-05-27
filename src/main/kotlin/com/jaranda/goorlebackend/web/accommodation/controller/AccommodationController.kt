@@ -3,21 +3,21 @@ package com.jaranda.goorlebackend.web.accommodation.controller
 import com.jaranda.goorlebackend.domain.accommodations.dto.AccommodationCreateDTO
 import com.jaranda.goorlebackend.domain.accommodations.service.AccommodationService
 import org.springframework.security.core.Authentication
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/api/v1/accommodations")
 class AccommodationController(
     private val accommodationService: AccommodationService
-){
+) {
     @GetMapping("")
     fun findAll() = accommodationService.findAll()
 
     @PostMapping("")
-    fun createAccommodation(authentication: Authentication, @RequestBody create : AccommodationCreateDTO) =
-        accommodationService.createAccommodation(authentication.name, create)
+    fun createAccommodation(
+        authentication: Authentication,
+        @RequestPart("data") create: AccommodationCreateDTO,
+        @RequestPart("images") files: List<MultipartFile>,
+    ) = accommodationService.createAccommodation(authentication.name, create, files)
 }
