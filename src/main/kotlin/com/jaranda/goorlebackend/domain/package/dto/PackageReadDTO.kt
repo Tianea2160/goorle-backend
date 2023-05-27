@@ -6,6 +6,7 @@ class PackageReadDTO(
     val id: String,
     val name: String,
     val content: String,
+    val imageUrl : String,
     val url: String,
 ) {
     companion object {
@@ -13,7 +14,8 @@ class PackageReadDTO(
             id = entity.id,
             name = entity.name,
             content = entity.content,
-            url = entity.url
+            imageUrl = entity.imageUrl,
+            url = entity.url,
         )
     }
 }
