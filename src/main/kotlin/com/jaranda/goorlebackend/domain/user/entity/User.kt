@@ -1,9 +1,8 @@
 package com.jaranda.goorlebackend.domain.user.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import com.jaranda.goorlebackend.domain.accommodations.entity.Accommodation
+import com.jaranda.goorlebackend.domain.comment.entity.Comment
+import jakarta.persistence.*
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
@@ -13,8 +12,12 @@ class User(
     @Id
     @Column(name = "user_id")
     val id: String,
-    val nickname: String = "초보",
-    val score: Long = 0L,
+    var nickname: String = "초보",
+    var score: Long = 0L,
+    @OneToMany(mappedBy = "writer", cascade = [CascadeType.ALL])
+    val accommodations: List<Accommodation> = mutableListOf(),
+    @OneToMany(mappedBy = "writer", cascade = [CascadeType.ALL])
+    val comments: List<Comment> = mutableListOf(),
 ) : UserDetails {
     override fun getAuthorities() = mutableListOf(SimpleGrantedAuthority("ROLE_USER"))
 

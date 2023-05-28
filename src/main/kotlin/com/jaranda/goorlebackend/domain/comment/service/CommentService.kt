@@ -40,4 +40,7 @@ class CommentService(
 
     @Transactional
     fun findRecentComments() = commentRepository.findRecentComments().map { CommentRecentReadDTO.of(it) }
+
+    @Transactional(readOnly = true)
+    fun findMyComments(loginId: String) = commentRepository.findMyComments(loginId).map { CommentRecentReadDTO.of(it) }
 }
