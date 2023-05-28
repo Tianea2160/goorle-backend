@@ -32,4 +32,11 @@ class UserService(
 
     @Transactional(readOnly = true)
     fun findGoorlePickers() = userRepository.findGoorlePickers().map { UserReadDTO.of(it) }
+
+    @Transactional
+    fun updateNickname(loginId: String, nickname: String): String {
+        val user = userRepository.findByIdOrNull(loginId) ?: throw UserNotFoundException()
+        user.nickname = nickname
+        return nickname
+    }
 }

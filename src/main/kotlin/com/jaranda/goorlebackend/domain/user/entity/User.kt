@@ -13,8 +13,8 @@ class User(
     @Id
     @Column(name = "user_id")
     val id: String,
-    val nickname: String = "초보",
-    val score: Long = 0L,
+    var nickname: String = "초보",
+    var score: Long = 0L,
 ) : UserDetails {
     override fun getAuthorities() = mutableListOf(SimpleGrantedAuthority("ROLE_USER"))
 

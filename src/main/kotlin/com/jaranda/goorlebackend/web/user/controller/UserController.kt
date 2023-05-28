@@ -4,7 +4,9 @@ import com.jaranda.goorlebackend.domain.user.service.UserService
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -20,4 +22,10 @@ class UserController(
 
     @GetMapping("/{userId}")
     fun findUserById(@PathVariable(name = "userId") userId: String) = userService.findUserById(userId)
+
+    @PostMapping("/me/nickname")
+    fun updateNickname(
+        authentication: Authentication,
+        @RequestParam(name = "nickname") nickname: String,
+    ) = userService.updateNickname(authentication.name, nickname)
 }
