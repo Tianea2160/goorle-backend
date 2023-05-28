@@ -9,4 +9,7 @@ import org.springframework.stereotype.Repository
 interface CommentRepository : JpaRepository<Comment, String> {
     @Query("SELECT c FROM Comment c ORDER BY c.createdAt DESC LIMIT 6")
     fun findRecentComments(): List<Comment>
+
+    @Query("SELECT c FROM Comment c WHERE c.writer.id = :userId ORDER BY c.createdAt DESC")
+    fun findMyComments(userId: String): List<Comment>
 }
