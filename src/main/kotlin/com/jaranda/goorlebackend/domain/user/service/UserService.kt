@@ -39,4 +39,11 @@ class UserService(
         user.nickname = nickname
         return nickname
     }
+
+    @Transactional
+    fun deleteUser(userId: String): String {
+        val user = userRepository.findByIdOrNull(userId) ?: throw UserNotFoundException()
+        userRepository.deleteById(userId)
+        return userId
+    }
 }

@@ -23,4 +23,14 @@ class AuthController(
             status = 200
         )
     }
+
+    @DeleteMapping("/secession")
+    fun secession(authentication: Authentication) : CommonResponse{
+        authService.logout(authentication.name)
+        authService.secession(authentication.name)
+        return CommonResponse(
+            code = "SECESSION_SUCCESS",
+            status = 200
+        )
+    }
 }

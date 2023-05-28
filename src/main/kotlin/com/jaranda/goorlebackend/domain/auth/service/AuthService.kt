@@ -28,5 +28,9 @@ class AuthService(
     fun logout(userId: String) {
         redisTemplate.delete(userId)
     }
+
+    fun secession(userId:String){
+        userService.deleteUser(userId)
+    }
 }
 
