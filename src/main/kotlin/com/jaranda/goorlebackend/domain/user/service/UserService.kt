@@ -3,6 +3,7 @@ package com.jaranda.goorlebackend.domain.user.service
 import com.jaranda.goorlebackend.domain.user.dto.UserReadDTO
 import com.jaranda.goorlebackend.domain.user.entity.User
 import com.jaranda.goorlebackend.domain.user.error.UserAlreadyException
+import com.jaranda.goorlebackend.domain.user.error.UserNotFoundException
 import com.jaranda.goorlebackend.domain.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -20,10 +21,14 @@ class UserService(
         return UserReadDTO.of(user)
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     fun findUserByIdOrNull(userId: String): UserReadDTO? = userRepository.findByIdOrNull(userId)?.let {
         return UserReadDTO.of(it)
     }
+
+    @Transactional(readOnly = true)
+    fun findUserById(userId: String): UserReadDTO =
+        (userRepository.findByIdOrNull(userId) ?: throw UserNotFoundException()).let { return UserReadDTO.of(it) }
 
     @Transactional(readOnly = true)
     fun findGoorlePickers() = userRepository.findGoorlePickers().map { UserReadDTO.of(it) }
