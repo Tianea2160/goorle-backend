@@ -3,7 +3,7 @@ package com.jaranda.goorlebackend.domain.`package`.dto
 import com.jaranda.goorlebackend.domain.`package`.entity.Package
 
 class PackageReadDTO(
-    val id: String,
+    val packageId: String,
     val name: String,
     val content: String,
     val imageUrl : String,
@@ -11,7 +11,7 @@ class PackageReadDTO(
 ) {
     companion object {
         fun of(entity: Package) = PackageReadDTO(
-            id = entity.id,
+            packageId = entity.id,
             name = entity.name,
             content = entity.content,
             imageUrl = entity.imageUrl,

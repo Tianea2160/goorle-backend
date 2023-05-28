@@ -5,7 +5,7 @@ import com.jaranda.goorlebackend.domain.user.dto.UserReadDTO
 import java.time.LocalDateTime
 
 class CommentReadDTO(
-    val id: String,
+    val commendId: String,
     val content: String,
     val writer: UserReadDTO,
     val emoticon: Int,
@@ -13,7 +13,7 @@ class CommentReadDTO(
 ) {
     companion object {
         fun of(entity: Comment): CommentReadDTO = CommentReadDTO(
-            id = entity.id,
+            commendId = entity.id,
             content = entity.content,
             writer = UserReadDTO.of(entity.writer),
             emoticon = entity.emoticon,

@@ -7,7 +7,7 @@ import com.jaranda.goorlebackend.domain.accommodations.entity.TagValue
 import com.jaranda.goorlebackend.domain.comment.dto.CommentReadDTO
 
 class AccommodationReadDTO(
-    val id: String,
+    val accommodationId: String,
     val name: String,
     val location: String,
     val position: Position,
@@ -18,7 +18,7 @@ class AccommodationReadDTO(
 ) {
     companion object {
         fun of(entity: Accommodation) = AccommodationReadDTO(
-            id = entity.id,
+            accommodationId = entity.id,
             name = entity.name,
             location = entity.location,
             position = entity.position,
