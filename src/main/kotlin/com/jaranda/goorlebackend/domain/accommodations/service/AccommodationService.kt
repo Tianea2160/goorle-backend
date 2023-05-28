@@ -37,6 +37,7 @@ class AccommodationService(
         val user = userRepository.findByIdOrNull(loginId) ?: throw UserNotFoundException()
         val imageUrls = imageService.uploadImages(files)
         val accommodation = accommodationRepository.save(create.toEntity(user))
+        user.score += 1
 
         for (url in imageUrls)
             accommodation.images.add(Image(url = url, accommodation = accommodation))
