@@ -3,13 +3,10 @@ package com.jaranda.goorlebackend.shared.security
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Service
-import java.time.Duration
-import java.time.temporal.ChronoUnit
 import java.util.*
 
 
@@ -17,7 +14,6 @@ import java.util.*
 class JwtService(
     @Value("\${jwt.secret}")
     private val secretKey: String,
-    private val template: StringRedisTemplate
 ) {
     private val key = Keys.hmacShaKeyFor(secretKey.toByteArray())
     val accessDuration: Long = 1000 * 60 * 60 * 6
@@ -40,10 +36,6 @@ class JwtService(
     fun getAuthentication(token: String): Authentication {
         val claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).body
         return UsernamePasswordAuthenticationToken(claims.subject, null, listOf(SimpleGrantedAuthority("ROLE_USER")))
-    }
-
-    fun saveRefreshToken(username: String, token: String) {
-        template.opsForValue().set(username, token, Duration.of(7, ChronoUnit.DAYS))
     }
 
     fun getSubjectFromToken(token: String): String =
