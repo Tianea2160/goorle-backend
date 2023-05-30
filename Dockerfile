@@ -1,6 +1,7 @@
 FROM gradle:7.6.1-jdk17-alpine as builder
 WORKDIR /app
 COPY . .
+RUN chmod 755 gradlew
 RUN ./gradlew clean build
 
 FROM openjdk:17-alpine
