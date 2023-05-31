@@ -2,7 +2,6 @@ package com.jaranda.goorlebackend.infra.comment.adapter
 
 import com.jaranda.goorlebackend.domain.comment.entity.Comment
 import com.jaranda.goorlebackend.infra.comment.repository.CommentRepository
-import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 

@@ -8,8 +8,6 @@ import com.jaranda.goorlebackend.domain.user.error.UserNotFoundException
 import com.jaranda.goorlebackend.infra.accommodations.adapter.AccommodationAdapter
 import com.jaranda.goorlebackend.infra.comment.adapter.CommentAdapter
 import com.jaranda.goorlebackend.infra.user.adapter.UserAdapter
-import com.jaranda.goorlebackend.infra.user.repository.UserRepository
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
