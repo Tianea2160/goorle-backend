@@ -1,4 +1,4 @@
-package com.jaranda.goorlebackend.domain.comment.repository
+package com.jaranda.goorlebackend.infra.comment.repository
 
 import com.jaranda.goorlebackend.domain.comment.entity.Comment
 import org.springframework.data.jpa.repository.JpaRepository

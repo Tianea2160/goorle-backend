@@ -2,12 +2,13 @@ package com.jaranda.goorlebackend.domain.comment.service
 
 import com.jaranda.goorlebackend.domain.accommodations.error.AccommodationNotFoundException
 import com.jaranda.goorlebackend.domain.accommodations.error.NoPermissionException
-import com.jaranda.goorlebackend.domain.accommodations.repository.AccommodationRepository
+import com.jaranda.goorlebackend.infra.accommodations.repository.AccommodationRepository
 import com.jaranda.goorlebackend.domain.comment.dto.CommentCreateDTO
 import com.jaranda.goorlebackend.domain.comment.dto.CommentRecentReadDTO
-import com.jaranda.goorlebackend.domain.comment.repository.CommentRepository
+import com.jaranda.goorlebackend.infra.comment.repository.CommentRepository
 import com.jaranda.goorlebackend.domain.user.error.UserNotFoundException
-import com.jaranda.goorlebackend.domain.user.repository.UserRepository
+import com.jaranda.goorlebackend.infra.accommodations.adapter.AccommodationAdapter
+import com.jaranda.goorlebackend.infra.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -16,14 +17,14 @@ import org.springframework.transaction.annotation.Transactional
 class CommentService(
     private val commentRepository: CommentRepository,
     private val userRepository: UserRepository,
-    private val accommodationRepository: AccommodationRepository
+    private val accommodationAdapter: AccommodationAdapter,
 ) {
 
     @Transactional
     fun createComment(loginId: String, accommodationId: String, create: CommentCreateDTO): String {
         val user = userRepository.findByIdOrNull(loginId) ?: throw UserNotFoundException()
         val accommodation =
-            accommodationRepository.findByIdOrNull(accommodationId) ?: throw AccommodationNotFoundException()
+            accommodationAdapter.findByIdOrNull(accommodationId) ?: throw AccommodationNotFoundException()
 
         val comment = create.toEntity(user, accommodation)
         commentRepository.save(comment)

@@ -4,7 +4,7 @@ import com.jaranda.goorlebackend.domain.user.dto.UserReadDTO
 import com.jaranda.goorlebackend.domain.user.entity.User
 import com.jaranda.goorlebackend.domain.user.error.UserAlreadyException
 import com.jaranda.goorlebackend.domain.user.error.UserNotFoundException
-import com.jaranda.goorlebackend.domain.user.repository.UserRepository
+import com.jaranda.goorlebackend.infra.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

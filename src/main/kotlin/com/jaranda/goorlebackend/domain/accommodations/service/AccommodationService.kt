@@ -7,11 +7,12 @@ import com.jaranda.goorlebackend.domain.accommodations.entity.Tag
 import com.jaranda.goorlebackend.domain.accommodations.error.AccommodationNotFoundException
 import com.jaranda.goorlebackend.domain.accommodations.error.FileSizeValidException
 import com.jaranda.goorlebackend.domain.accommodations.error.NoPermissionException
-import com.jaranda.goorlebackend.domain.accommodations.repository.AccommodationRepository
+import com.jaranda.goorlebackend.infra.accommodations.repository.AccommodationRepository
 import com.jaranda.goorlebackend.domain.image.entity.Image
 import com.jaranda.goorlebackend.domain.image.service.ImageService
 import com.jaranda.goorlebackend.domain.user.error.UserNotFoundException
-import com.jaranda.goorlebackend.domain.user.repository.UserRepository
+import com.jaranda.goorlebackend.infra.accommodations.adapter.AccommodationAdapter
+import com.jaranda.goorlebackend.infra.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,12 +20,12 @@ import org.springframework.web.multipart.MultipartFile
 
 @Service
 class AccommodationService(
-    private val accommodationRepository: AccommodationRepository,
+    private val accommodationAdapter: AccommodationAdapter,
     private val userRepository: UserRepository,
     private val imageService: ImageService
 ) {
     @Transactional(readOnly = true)
-    fun findAll() = accommodationRepository.findAll().map { AccommodationReadDTO.of(it) }
+    fun findAll() = accommodationAdapter.findAll().map { AccommodationReadDTO.of(it) }
 
     @Transactional
     fun createAccommodation(
@@ -36,7 +37,7 @@ class AccommodationService(
 
         val user = userRepository.findByIdOrNull(loginId) ?: throw UserNotFoundException()
         val imageUrls = imageService.uploadImages(files)
-        val accommodation = accommodationRepository.save(create.toEntity(user))
+        val accommodation = accommodationAdapter.save(create.toEntity(user))
         user.score += 1
 
         for (url in imageUrls)
@@ -52,24 +53,24 @@ class AccommodationService(
     @Transactional
     fun deleteAccommodation(loginId: String, accommodationId: String): String {
         val accommodation =
-            accommodationRepository.findByIdOrNull(accommodationId) ?: throw AccommodationNotFoundException()
+            accommodationAdapter.findByIdOrNull(accommodationId) ?: throw AccommodationNotFoundException()
 
         for (image in accommodation.images)
             imageService.deleteImage(image.url)
 
         if (accommodation.writer.id != loginId) throw NoPermissionException()
-        accommodationRepository.delete(accommodation)
+        accommodationAdapter.delete(accommodation)
         return accommodationId
     }
 
     @Transactional(readOnly = true)
     fun findAllByUserId(userId: String): List<AccommodationReadDTO> =
-        accommodationRepository.findAllByUserId(userId).map { AccommodationReadDTO.of(it) }
+        accommodationAdapter.findAllByUserId(userId).map { AccommodationReadDTO.of(it) }
 
     @Transactional(readOnly = true)
     fun findById(accommodationId: String): AccommodationReadDTO {
         val accommodation =
-            accommodationRepository.findByIdOrNull(accommodationId) ?: throw AccommodationNotFoundException()
+            accommodationAdapter.findByIdOrNull(accommodationId) ?: throw AccommodationNotFoundException()
         return AccommodationReadDTO.of(accommodation)
     }
 }
