@@ -12,7 +12,7 @@ class User(
     @Id
     @Column(name = "user_id")
     val id: String,
-    var nickname: String = "초보",
+    var nickname: String = generatedRandomName(),
     var score: Long = 0L,
     @OneToMany(mappedBy = "writer", cascade = [CascadeType.ALL])
     val accommodations: List<Accommodation> = mutableListOf(),
@@ -20,7 +20,6 @@ class User(
     val comments: List<Comment> = mutableListOf(),
 ) : UserDetails {
     override fun getAuthorities() = mutableListOf(SimpleGrantedAuthority("ROLE_USER"))
-
     override fun getPassword() = id
     override fun getUsername() = id
     override fun isAccountNonExpired() = true
@@ -28,3 +27,18 @@ class User(
     override fun isCredentialsNonExpired() = true
     override fun isEnabled() = true
 }
+
+val names = listOf(
+    "자유로한발짝",
+    "떠돌이휴가중",
+    "떠나자한발짝",
+    "발걸음기억해",
+    "떠도는휴게소",
+    "세계로길잡이",
+    "자유의탐험가",
+    "떠돌이가이드",
+    "도전풍선여행",
+    "멋진여정의끝",
+)
+
+fun generatedRandomName() = names.random()
