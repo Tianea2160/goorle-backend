@@ -2,12 +2,11 @@ package com.jaranda.goorlebackend.domain.comment.service
 
 import com.jaranda.goorlebackend.domain.accommodations.error.AccommodationNotFoundException
 import com.jaranda.goorlebackend.domain.accommodations.error.NoPermissionException
-import com.jaranda.goorlebackend.infra.accommodations.repository.AccommodationRepository
 import com.jaranda.goorlebackend.domain.comment.dto.CommentCreateDTO
 import com.jaranda.goorlebackend.domain.comment.dto.CommentRecentReadDTO
-import com.jaranda.goorlebackend.infra.comment.repository.CommentRepository
 import com.jaranda.goorlebackend.domain.user.error.UserNotFoundException
 import com.jaranda.goorlebackend.infra.accommodations.adapter.AccommodationAdapter
+import com.jaranda.goorlebackend.infra.comment.adapter.CommentAdapter
 import com.jaranda.goorlebackend.infra.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -15,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class CommentService(
-    private val commentRepository: CommentRepository,
+    private val commentAdapter: CommentAdapter,
     private val userRepository: UserRepository,
     private val accommodationAdapter: AccommodationAdapter,
 ) {
@@ -27,21 +26,21 @@ class CommentService(
             accommodationAdapter.findByIdOrNull(accommodationId) ?: throw AccommodationNotFoundException()
 
         val comment = create.toEntity(user, accommodation)
-        commentRepository.save(comment)
+        commentAdapter.save(comment)
         return comment.id
     }
 
     @Transactional
     fun deleteComment(loginId: String, accommodationId: String, commentId: String): String {
-        val comment = commentRepository.findByIdOrNull(commentId) ?: throw AccommodationNotFoundException()
+        val comment = commentAdapter.findByIdOrNull(commentId) ?: throw AccommodationNotFoundException()
         if (loginId != comment.writer.id) throw NoPermissionException()
-        commentRepository.deleteById(commentId)
+        commentAdapter.deleteById(commentId)
         return commentId
     }
 
     @Transactional
-    fun findRecentComments() = commentRepository.findRecentComments().map { CommentRecentReadDTO.of(it) }
+    fun findRecentComments() = commentAdapter.findRecentComments().map { CommentRecentReadDTO.of(it) }
 
     @Transactional(readOnly = true)
-    fun findMyComments(loginId: String) = commentRepository.findMyComments(loginId).map { CommentRecentReadDTO.of(it) }
+    fun findMyComments(loginId: String) = commentAdapter.findMyComments(loginId).map { CommentRecentReadDTO.of(it) }
 }
