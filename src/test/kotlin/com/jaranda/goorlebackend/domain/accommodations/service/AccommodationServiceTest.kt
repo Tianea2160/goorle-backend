@@ -1,9 +1,11 @@
 package com.jaranda.goorlebackend.domain.accommodations.service
 
 import com.jaranda.goorlebackend.domain.accommodations.dto.AccommodationCreateDTO
+import com.jaranda.goorlebackend.domain.accommodations.entity.Accommodation
 import com.jaranda.goorlebackend.domain.accommodations.entity.FeatureValue
 import com.jaranda.goorlebackend.domain.accommodations.entity.Position
 import com.jaranda.goorlebackend.domain.accommodations.entity.TagValue
+import com.jaranda.goorlebackend.domain.image.entity.Image
 import com.jaranda.goorlebackend.domain.image.service.ImageService
 import com.jaranda.goorlebackend.domain.user.entity.User
 import com.jaranda.goorlebackend.infra.accommodations.adapter.AccommodationAdapter
@@ -24,7 +26,7 @@ class AccommodationServiceTest : BehaviorSpec({
     val accommodationService = AccommodationService(accommodationAdapter, userAdapter, imageService)
     val loginId = "test login id"
     val loginUser = User(
-        id = "test user id",
+        id = loginId,
         nickname = "test nickname",
         score = 10,
         accommodations = listOf(),
@@ -68,6 +70,13 @@ class AccommodationServiceTest : BehaviorSpec({
         val deleteId = "test delete id"
 
         `when`("숙소 삭제 요청을 하면") {
+            every { accommodationAdapter.findByIdOrNull(deleteId) } returns Accommodation(
+                name = "test name",
+                position = Position(10.0, 20.0),
+                location = "test location",
+                writer = loginUser,
+            )
+            every { accommodationAdapter.delete(any()) } returns Unit
             val id = accommodationService.deleteAccommodation(loginId, deleteId)
 
             then("숙소가 삭제 되어야한다.") {
