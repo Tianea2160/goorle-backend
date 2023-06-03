@@ -1,4 +1,4 @@
-package com.jaranda.goorlebackend.domain.user.repository
+package com.jaranda.goorlebackend.infra.user.repository
 
 import com.jaranda.goorlebackend.domain.user.entity.User
 import org.springframework.data.jpa.repository.JpaRepository

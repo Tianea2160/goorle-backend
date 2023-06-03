@@ -1,13 +1,12 @@
 package com.jaranda.goorlebackend.domain.auth.service
 
+//import org.springframework.data.redis.core.StringRedisTemplate
 import com.jaranda.goorlebackend.domain.auth.dto.LoginDTO
 import com.jaranda.goorlebackend.domain.auth.dto.LoginSuccessDTO
 import com.jaranda.goorlebackend.domain.user.service.UserService
 import com.jaranda.goorlebackend.shared.security.JwtService
-//import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.Duration
 
 @Service
 class AuthService(

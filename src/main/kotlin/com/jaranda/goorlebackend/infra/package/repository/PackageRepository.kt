@@ -1,4 +1,4 @@
-package com.jaranda.goorlebackend.domain.`package`.repository
+package com.jaranda.goorlebackend.infra.`package`.repository
 
 import com.jaranda.goorlebackend.domain.`package`.entity.Package
 import org.springframework.data.jpa.repository.JpaRepository

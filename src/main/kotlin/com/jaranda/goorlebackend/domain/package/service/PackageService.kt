@@ -1,7 +1,7 @@
 package com.jaranda.goorlebackend.domain.`package`.service
 
 import com.jaranda.goorlebackend.domain.`package`.dto.PackageReadDTO
-import com.jaranda.goorlebackend.domain.`package`.repository.PackageRepository
+import com.jaranda.goorlebackend.infra.`package`.repository.PackageRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

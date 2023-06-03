@@ -1,4 +1,4 @@
-package com.jaranda.goorlebackend.domain.image.repository
+package com.jaranda.goorlebackend.infra.image.repository
 
 import com.jaranda.goorlebackend.domain.image.entity.Image
 import org.springframework.data.jpa.repository.JpaRepository
