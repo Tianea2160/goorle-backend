@@ -1,6 +1,8 @@
 package com.jaranda.goorlebackend.config
 
-import com.jaranda.goorlebackend.shared.security.JwtFilter
+import com.jaranda.goorlebackend.shared.security.filter.JwtFilter
+import com.jaranda.goorlebackend.shared.security.handler.JarandaAccessDeniedHandler
+import com.jaranda.goorlebackend.shared.security.handler.JarandaAuthenticationEntryPoint
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -13,7 +15,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 class SecurityConfig(
-    private val jwtFilter: JwtFilter
+    private val jwtFilter: JwtFilter,
+    private val accessDeniedHandler: JarandaAccessDeniedHandler,
+    private val authenticationEntryPoint: JarandaAuthenticationEntryPoint,
 ) {
     @Bean
     fun userDetailsService() = UserDetailsService { _ -> null }
@@ -24,6 +28,10 @@ class SecurityConfig(
             .csrf { it.disable() }
             .formLogin { it.disable() }
             .httpBasic { it.disable() }
+            .exceptionHandling { config ->
+                config.accessDeniedHandler(accessDeniedHandler)
+                config.authenticationEntryPoint(authenticationEntryPoint)
+            }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
             .authorizeHttpRequests { auth ->

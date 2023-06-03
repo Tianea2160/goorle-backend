@@ -1,5 +1,6 @@
-package com.jaranda.goorlebackend.shared.security
+package com.jaranda.goorlebackend.shared.security.filter
 
+import com.jaranda.goorlebackend.shared.security.JwtService
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
