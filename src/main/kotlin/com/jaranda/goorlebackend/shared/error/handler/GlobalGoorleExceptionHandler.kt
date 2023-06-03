@@ -18,7 +18,7 @@ class GlobalGoorleExceptionHandler {
     fun handlerException(e: MissingServletRequestPartException) =
         ResponseEntity.status(400).body(ErrorCode(code = "missing request field or part", status = 400))
 
-    @ExceptionHandler(Exception::class)
+    @ExceptionHandler(HttpMessageNotReadableException::class)
     fun handlerException(e : HttpMessageNotReadableException) =
         ResponseEntity.status(400).body(ErrorCode(code = "bad request, check that json field is correct", status = 400))
 
