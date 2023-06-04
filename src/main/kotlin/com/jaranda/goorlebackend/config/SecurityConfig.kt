@@ -5,6 +5,7 @@ import com.jaranda.goorlebackend.shared.security.handler.JarandaAccessDeniedHand
 import com.jaranda.goorlebackend.shared.security.handler.JarandaAuthenticationEntryPoint
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -38,6 +39,13 @@ class SecurityConfig(
                 auth
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                     .requestMatchers("/api/v1/auth/login").permitAll()
+                    .requestMatchers(
+                        HttpMethod.GET,
+                        "/api/v1/user/me",
+                        "/api/v1/accommodations/me",
+                        "/api/v1/comments/me"
+                    ).authenticated()
+                    .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
                     .requestMatchers("/api/v1/**").authenticated()
                     .anyRequest().denyAll()
             }
