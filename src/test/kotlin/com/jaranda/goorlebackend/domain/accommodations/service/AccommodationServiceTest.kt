@@ -40,7 +40,7 @@ class AccommodationServiceTest : BehaviorSpec({
             location = "location",
             position = Position(10.0, 20.0),
             features = listOf(FeatureValue.ELEVATOR, FeatureValue.PARKING),
-            tags = listOf(TagValue.ATTRACTION, TagValue.HANOK, TagValue.PET)
+            tags = listOf(TagValue.TOUR, TagValue.HANOK, TagValue.DOG)
         )
         `when`("숙소 생성을 요청하면") {
             every { accommodationAdapter.save(any()) } returnsArgument 0
