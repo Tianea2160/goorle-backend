@@ -31,7 +31,7 @@ class Accommodation(
 )
 
 @Embeddable
-class Position(val lon: Double, val lat: Double)
+class Position(val lng: Double, val lat: Double)
 
 
 @Entity
@@ -39,7 +39,7 @@ class Position(val lon: Double, val lat: Double)
 class Tag(
     @Id
     @Column(name = "tag_id")
-    val id: String = UUID.randomUUID().toString(),
+    val id: String = uuid(),
     @Enumerated(EnumType.STRING)
     val value: TagValue,
     @ManyToOne(targetEntity = Accommodation::class, fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
@@ -56,7 +56,7 @@ enum class TagValue {
 class Feature(
     @Id
     @Column(name = "feature_id")
-    val id: String = UUID.randomUUID().toString(),
+    val id: String = uuid(),
     @Enumerated(EnumType.STRING)
     val value: FeatureValue,
     @ManyToOne(targetEntity = Accommodation::class, fetch = FetchType.LAZY, cascade = [CascadeType.ALL])

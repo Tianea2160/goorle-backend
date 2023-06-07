@@ -6,13 +6,11 @@ import com.jaranda.goorlebackend.domain.user.entity.User
 
 class CommentCreateDTO(
     val content: String,
-    val emoticon: Int,
 ) {
     fun toEntity(user: User, accommodation: Accommodation) =
         Comment(
             writer = user,
             content = content,
-            emoticon = emoticon,
             accommodation = accommodation
         )
 }

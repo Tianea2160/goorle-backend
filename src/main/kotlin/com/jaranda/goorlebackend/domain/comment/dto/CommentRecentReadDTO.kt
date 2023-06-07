@@ -10,7 +10,6 @@ class CommentRecentReadDTO(
     val accommodationId: String,
     val content: String,
     val writer: UserReadDTO,
-    val emoticon: Int,
     val createdAt: LocalDateTime
 ) {
     companion object {
@@ -19,7 +18,6 @@ class CommentRecentReadDTO(
             accommodationId = entity.accommodation.id,
             content = entity.content,
             writer = UserReadDTO.of(entity.writer),
-            emoticon = entity.emoticon,
             createdAt = entity.createdAt,
         )
     }

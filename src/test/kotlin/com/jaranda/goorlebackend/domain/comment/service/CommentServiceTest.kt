@@ -24,7 +24,6 @@ class CommentServiceTest : BehaviorSpec({
     given("댓글 작성 정보가 있을 때") {
         val create = CommentCreateDTO(
             content = "hello world",
-            emoticon = 5,
         )
         val accommodationId = "test accommodation id"
         `when`("댓글 생성 요청을 하면") {
@@ -45,7 +44,6 @@ class CommentServiceTest : BehaviorSpec({
                 writer = User(id = loginId),
                 accommodation = mockk(),
                 content = "test content",
-                emoticon = 5,
             )
             every { commentAdapter.deleteById(deleteCommentId) } returns Unit
             val id = commentService.deleteComment(loginId, targetAccommodationId, deleteCommentId)
