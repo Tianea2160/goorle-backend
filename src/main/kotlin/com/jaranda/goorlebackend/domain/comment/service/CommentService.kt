@@ -4,6 +4,7 @@ import com.jaranda.goorlebackend.domain.accommodations.error.AccommodationNotFou
 import com.jaranda.goorlebackend.domain.accommodations.error.NoPermissionException
 import com.jaranda.goorlebackend.domain.comment.dto.CommentCreateDTO
 import com.jaranda.goorlebackend.domain.comment.dto.CommentRecentReadDTO
+import com.jaranda.goorlebackend.domain.comment.dto.CommentSimpleReadDTO
 import com.jaranda.goorlebackend.domain.user.error.UserNotFoundException
 import com.jaranda.goorlebackend.infra.accommodations.adapter.AccommodationAdapter
 import com.jaranda.goorlebackend.infra.comment.adapter.CommentAdapter
@@ -38,8 +39,8 @@ class CommentService(
     }
 
     @Transactional
-    fun findRecentComments() = commentAdapter.findRecentComments().map { CommentRecentReadDTO.of(it) }
+    fun findRecentComments() = commentAdapter.findRecentComments().map { CommentSimpleReadDTO.of(it) }
 
     @Transactional(readOnly = true)
-    fun findMyComments(loginId: String) = commentAdapter.findMyComments(loginId).map { CommentRecentReadDTO.of(it) }
+    fun findMyComments(loginId: String) = commentAdapter.findMyComments(loginId).map { CommentSimpleReadDTO.of(it) }
 }
